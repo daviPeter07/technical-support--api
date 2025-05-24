@@ -13,6 +13,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
+  email.req
 });
 
 const port = process.env.PORT;
