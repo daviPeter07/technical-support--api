@@ -1,8 +1,8 @@
 import express from 'express';
-import authRoutes from './routes/auth.routes.js';
-import userRoutes from './routes/user.routes.js';
-import ticketRoutes from './routes/ticket.routes.js';
-import errorHandler from './utils/errorHandler.js';
+import authRoutes from './src/routes/auth.routes.js';
+import userRoutes from './src/routes/user.routes.js';
+import ticketRoutes from './src/routes/ticket.routes.js';
+import errorHandler from './src/utils/errorHandler.js';
 
 const app = express();
 app.use(express.json());
