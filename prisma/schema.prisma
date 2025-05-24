@@ -1,0 +1,50 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//usuario
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  tickets   Ticket[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+//chamados
+model Ticket {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  status      Status    @relation(fields: [statusId], references: [id])
+  statusId    Int
+  category    Category  @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+//categoria de chamado
+model Category {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  tickets Ticket[]
+}
+
+//status chamado
+model Status {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  tickets Ticket[]
+}
