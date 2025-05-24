@@ -1,18 +1,21 @@
 import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-
-import userRoutes from './src/routes/user.routes.js';
-import ticketRoutes from './src/routes/ticket.routes.js';
-
-dotenv.config();
+import authRoutes from './routes/auth.routes.js';
+import userRoutes from './routes/user.routes.js';
+import ticketRoutes from './routes/ticket.routes.js';
+import errorHandler from './utils/errorHandler.js';
 
 const app = express();
-app.use(cors());
 app.use(express.json());
 
-app.use('/users', userRoutes);
-app.use('/tickets', ticketRoutes);
+//rotas
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/tickets', ticketRoutes);
 
-const port = process.env.PORT;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+//middleware de erro
+app.use(errorHandler);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});

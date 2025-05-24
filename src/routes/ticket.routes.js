@@ -1,12 +1,27 @@
 import express from 'express';
-import * as ticketController from '../controllers/ticket.controller.js';
+import { authenticate, authorize } from '../middlewares/auth.js';
+import {
+  createTicket,
+  getUserTickets,
+  getAllTickets,
+  updateTicket,
+  getCategories
+} from '../controllers/ticket.controller.js';
 
 const router = express.Router();
 
-router.get('/', ticketController.listTickets);
-router.get('/:id', ticketController.getTicket);
-router.post('/', ticketController.createTicket);
-router.put('/:id', ticketController.updateTicket);
-router.delete('/:id', ticketController.deleteTicket);
+// Público
+router.get('/categories', getCategories);
+
+// Autenticadas
+router.use(authenticate);
+
+// Usuários comuns
+router.post('/', createTicket);
+router.get('/my-tickets', getUserTickets);
+
+// Técnicos e Admin
+router.get('/', authorize(['TECHNICIAN', 'ADMIN']), getAllTickets);
+router.put('/:id', authorize(['TECHNICIAN', 'ADMIN']), updateTicket);
 
 export default router;

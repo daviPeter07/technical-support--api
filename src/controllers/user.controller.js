@@ -1,19 +1,34 @@
-import * as userService from '../services/user.service.js';
+import prisma from '../utils/prisma.js';
 
-export const listUsers = async (req, res) => {
+export const getUsers = async (req, res, next) => {
   try {
-    const users = await userService.getUsers();
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true
+      }
+    });
     res.json(users);
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
 
-export const createUser = async (req, res) => {
+export const getTechnicians = async (req, res, next) => {
   try {
-    const user = await userService.createUser(req.body);
-    res.status(201).json(user);
+    const technicians = await prisma.user.findMany({
+      where: { role: 'TECHNICIAN' },
+      select: {
+        id: true,
+        name: true,
+        email: true
+      }
+    });
+    res.json(technicians);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    next(error);
   }
 };
