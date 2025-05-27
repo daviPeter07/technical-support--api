@@ -10,17 +10,16 @@ import {
 
 const router = express.Router();
 
-// Público
+//rota de consulta pra categoria de chamado
 router.get('/categories', getCategories);
 
-// Autenticadas
 router.use(authenticate);
 
-// Usuários comuns
+//role de user pode criar ticket e pegar os tickets que ele mesmo criou
 router.post('/', createTicket);
 router.get('/my-tickets', getUserTickets);
 
-// Técnicos e Admin
+//roles autorizadas pra mudar e consultar os chamados
 router.get('/', authorize(['TECHNICIAN', 'ADMIN']), getAllTickets);
 router.put('/:id', authorize(['TECHNICIAN', 'ADMIN']), updateTicket);
 

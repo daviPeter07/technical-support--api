@@ -2,6 +2,7 @@ import prisma from '../utils/prisma.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+//func pra registro
 export const register = async (req, res, next) => {
   try {
     const { name, email, password, role } = req.body;
@@ -23,6 +24,7 @@ export const register = async (req, res, next) => {
   }
 };
 
+//func pra verificação de login
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;

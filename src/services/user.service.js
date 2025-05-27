@@ -5,6 +5,8 @@ import { AppError } from '../utils/errorHandler.js';
 const prisma = new PrismaClient();
 
 class UserService {
+
+  //register de user
   async createUser(userData) {
     try {
       const hashedPassword = await bcrypt.hash(userData.password, 12);
@@ -34,6 +36,7 @@ class UserService {
     }
   }
 
+  //consulta user por id
   async getUserById(id) {
     const user = await prisma.user.findUnique({
       where: { id },
@@ -53,6 +56,7 @@ class UserService {
     return user;
   }
 
+  //consulta de tecnicos
   async getTechnicians() {
     return prisma.user.findMany({
       where: { role: 'TECHNICIAN' },
@@ -64,6 +68,7 @@ class UserService {
     });
   }
 
+  //validate login por email e senha unicos
   async validateUser(email, password) {
     const user = await prisma.user.findUnique({ where: { email } });
     

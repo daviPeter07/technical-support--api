@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import userService from './user.service.js';
 import { AppError } from '../utils/errorHandler.js';
 
+//func pra enviar token e validação se user existe
 class AuthService {
   generateToken(user) {
     return jwt.sign(
@@ -11,10 +12,12 @@ class AuthService {
     );
   }
 
+  //func pra registro
   async register(userData) {
     return userService.createUser(userData);
   }
 
+  //func pra login
   async login(email, password) {
     const user = await userService.validateUser(email, password);
     const token = this.generateToken(user);
@@ -30,6 +33,7 @@ class AuthService {
     };
   }
 
+  //verificação de token
   async verifyToken(token) {
     try {
       return jwt.verify(token, process.env.JWT_SECRET);

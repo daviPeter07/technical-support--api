@@ -1,5 +1,6 @@
 import prisma from '../utils/prisma.js';
 
+//consulta dos users
 export const getUsers = async (req, res, next) => {
   try {
     const users = await prisma.user.findMany({
@@ -17,6 +18,7 @@ export const getUsers = async (req, res, next) => {
   }
 };
 
+//consulta de tecnicos
 export const getTechnicians = async (req, res, next) => {
   try {
     const technicians = await prisma.user.findMany({

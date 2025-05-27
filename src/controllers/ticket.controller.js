@@ -2,6 +2,7 @@ import prisma from '../utils/prisma.js';
 
 export const createTicket = async (req, res, next) => {
   try {
+    //so faz o chamado se o user existir
     const { title, description, priority, categoryId } = req.body;
     const userId = req.user.id;
 
@@ -32,6 +33,7 @@ export const createTicket = async (req, res, next) => {
   }
 };
 
+//consulta de chamados de user:id
 export const getUserTickets = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -58,6 +60,7 @@ export const getUserTickets = async (req, res, next) => {
   }
 };
 
+//consulta de todos os chamados
 export const getAllTickets = async (req, res, next) => {
   try {
     const tickets = await prisma.ticket.findMany({
@@ -86,6 +89,7 @@ export const getAllTickets = async (req, res, next) => {
   }
 };
 
+//alteração de chamados
 export const updateTicket = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -121,6 +125,7 @@ export const updateTicket = async (req, res, next) => {
   }
 };
 
+//consulta de categorias
 export const getCategories = async (req, res, next) => {
   try {
     const categories = await prisma.category.findMany();

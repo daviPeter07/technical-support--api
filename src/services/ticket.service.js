@@ -4,6 +4,8 @@ import { AppError } from '../utils/errorHandler.js';
 const prisma = new PrismaClient();
 
 class TicketService {
+
+  //criação de ticket recebe dados do chamado e id do usuario
   async createTicket(ticketData, userId) {
     try {
       return await prisma.ticket.create({
@@ -33,6 +35,7 @@ class TicketService {
     }
   }
 
+  //consulta ticket:id
   async getTicketById(id) {
     const ticket = await prisma.ticket.findUnique({
       where: { id },
@@ -60,6 +63,7 @@ class TicketService {
     return ticket;
   }
 
+  //consulta de chamados por user:id
   async getUserTickets(userId) {
     return prisma.ticket.findMany({
       where: { userId },
@@ -78,6 +82,7 @@ class TicketService {
     });
   }
 
+  //consulta de todos os chamados
   async getAllTickets() {
     return prisma.ticket.findMany({
       include: {
@@ -101,6 +106,7 @@ class TicketService {
     });
   }
 
+  //edit de chamados
   async updateTicket(id, updateData) {
     try {
       return await prisma.ticket.update({
@@ -130,6 +136,7 @@ class TicketService {
     }
   }
 
+  //consulta de categorias
   async getCategories() {
     return prisma.category.findMany();
   }
